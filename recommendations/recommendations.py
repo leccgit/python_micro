@@ -61,18 +61,19 @@ class RecommendationService(
         return RecommendationResponse(recommendations=books_to_recommend)
 
 
+class ErrorLogger(ServerInterceptor):
+    def intercept(self, method, request, context, method_name):
+        try:
+            return method(request, context)
+        except Exception as e:
+            self.log_error(e)
+            raise
+
+    def log_error(self, e: Exception) -> None:
+        pass
+
+
 def serve():
-    class ErrorLogger(ServerInterceptor):
-        def intercept(self, method, request, context, method_name):
-            try:
-                return method(request, context)
-            except Exception as e:
-                self.log_error(e)
-                raise
-
-        def log_error(self, e: Exception) -> None:
-            pass
-
     interceptors = [ErrorLogger()]
     # 创建gRPC服务器, 使用10个线程来处理请求
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), interceptors=interceptors)
@@ -88,4 +89,3 @@ def serve():
 
 if __name__ == "__main__":
     serve()
-
