@@ -1,0 +1,25 @@
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# grpc文件
+*_pb2.*
+*_pb2_grpc.*
+test/
+.idea/
+*.pyc
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+__pycache__/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+# pyenv
+.python-version

@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  marketplace:
+    build:
+      context: .
+      dockerfile: marketplace/Dockerfile
+    environment:
+      RECOMMENDATIONS_HOST: recommendations
+    image: marketplace
+    networks:
+      - microservices
+    ports:
+      - 5050:5050
+    volumes:
+      - webmicro:/webmicro/workspace/marketplace
+
+  recommendations:
+    build:
+      context: .
+      dockerfile: recommendations/Dockerfile
+    image: recommendations
+    networks:
+      - microservices
+    volumes:
+      - webmicro:/webmicro/workspace/recommendations
+networks:
+  microservices:
+volumes:
+  webmicro:
